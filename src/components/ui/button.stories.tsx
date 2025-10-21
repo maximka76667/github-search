@@ -4,7 +4,9 @@ import { Button } from "./button";
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
   component: Button,
-  tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     variant: {
       control: "select",
@@ -21,10 +23,9 @@ const meta: Meta<typeof Button> = {
       control: "select",
       options: ["default", "sm", "lg", "icon", "icon-sm", "icon-lg"],
     },
-    onClick: { action: "clicked" },
-  },
-  parameters: {
-    layout: "centered",
+    disabled: {
+      control: "boolean",
+    },
   },
 };
 
@@ -34,51 +35,75 @@ type Story = StoryObj<typeof Button>;
 export const Default: Story = {
   args: {
     children: "Button",
-    variant: "default",
-    size: "default",
   },
 };
 
-export const Variants: Story = {
-  render: (args) => (
-    <div className="flex flex-wrap gap-3">
-      <Button {...args} variant="default">
-        Default
-      </Button>
-      <Button {...args} variant="destructive">
-        Destructive
-      </Button>
-      <Button {...args} variant="outline">
-        Outline
-      </Button>
-      <Button {...args} variant="secondary">
-        Secondary
-      </Button>
-      <Button {...args} variant="ghost">
-        Ghost
-      </Button>
-      <Button {...args} variant="link">
-        Link
-      </Button>
-    </div>
-  ),
+export const Secondary: Story = {
+  args: {
+    variant: "secondary",
+    children: "Secondary",
+  },
 };
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button {...args} size="sm">
-        Small
-      </Button>
-      <Button {...args} size="default">
-        Default
-      </Button>
-      <Button {...args} size="lg">
-        Large
-      </Button>
-      <Button {...args} size="icon">
-        🔍
-      </Button>
-    </div>
-  ),
+export const Destructive: Story = {
+  args: {
+    variant: "destructive",
+    children: "Destructive",
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    variant: "outline",
+    children: "Outline",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    variant: "ghost",
+    children: "Ghost",
+  },
+};
+
+export const Link: Story = {
+  args: {
+    variant: "link",
+    children: "Link",
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: "sm",
+    children: "Small",
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: "lg",
+    children: "Large",
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    size: "icon",
+    children: "🚀",
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    children: "Disabled",
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    children: "Loading...",
+    disabled: true,
+  },
 };
