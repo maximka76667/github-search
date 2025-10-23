@@ -1,41 +1,97 @@
+/**
+ * @fileoverview Service for interacting with GitHub's GraphQL API v4.
+ * Provides functions to fetch user repository data.
+ */
+
+/**
+ * Represents the structure of a single GitHub repository from the REST API.
+ * @interface
+ */
 interface Repository {
+  /** Unique identifier for the repository. */
   id: number;
+
+  /** The name of the repository. */
   name: string;
+
+  /** Brief description of the repository's purpose. Null if no description is provided. */
   description: string | null;
+
+  /** The URL to access the repository on GitHub. */
   html_url: string;
+
+  /** Primary programming language used in the repository. Null if not specified. */
   language: string | null;
+
+  /** Total number of stars the repository has received. */
   stargazers_count: number;
+
+  /** Total number of times the repository has been forked. */
   forks_count: number;
+
+  /** ISO 8601 timestamp of when the repository was last updated. */
   updated_at: string;
 }
 
+/**
+ * Response structure from GitHub's GraphQL API for user repositories query.
+ * @interface
+ */
 interface GitHubGraphQLResponse {
+  /** Contains the successful response data. */
   data?: {
+    /** User information and repositories. */
     user: {
+      /** Collection of user's repositories. */
       repositories: {
+        /** Array of repository nodes returned from the query. */
         nodes: Array<{
+          /** Unique identifier for the repository (string in GraphQL). */
           id: string;
+
+          /** The name of the repository. */
           name: string;
+
+          /** Brief description of the repository's purpose. Null if no description is provided. */
           description: string | null;
+
+          /** The URL to access the repository on GitHub. */
           url: string;
+
+          /** Primary programming language information. */
           primaryLanguage: {
+            /** Name of the programming language. */
             name: string;
           } | null;
+
+          /** Total number of stars the repository has received. */
           stargazerCount: number;
+
+          /** Total number of times the repository has been forked. */
           forkCount: number;
+
+          /** ISO 8601 timestamp of when the repository was last updated. */
           updatedAt: string;
         }>;
       };
     };
   };
+
+  /** Array of errors returned from the GraphQL API, if any. */
   errors?: Array<{
+    /** Human-readable error message. */
     message: string;
   }>;
 }
 
+/** GitHub GraphQL API endpoint URL. */
 const GITHUB_GRAPHQL_API = "https://api.github.com/graphql";
 
-// GitHub GraphQL query to fetch user repositories
+/**
+ * GraphQL query to fetch a user's public repositories.
+ * Retrieves the most recently updated repositories with relevant metadata.
+ * @const {string}
+ */
 const GET_USER_REPOSITORIES = `
     query($username: String!, $first: Int!) {
       user(login: $username) {
@@ -58,10 +114,13 @@ const GET_USER_REPOSITORIES = `
   `;
 
 /**
- * Fetches repositories for a given GitHub user using GraphQL API v4
- * @param username - GitHub username
- * @param token - Optional GitHub personal access token for higher rate limits
- * @returns Promise with array of repositories
+ * Fetches repositories for a given GitHub user using GraphQL API v4.
+ * Retrieves up to 30 of the user's most recently updated public repositories.
+ *
+ * @param {string} username - The GitHub username to fetch repositories for.
+ * @param {string} [token] - Optional GitHub personal access token for higher rate limits and private repository access.
+ * @return {Promise<Repository[]>} Promise that resolves to an array of Repository objects.
+ * @throws {Error} When username is empty, user is not found, or API request fails.
  */
 export async function fetchUserRepositories(
   username: string,
