@@ -132,6 +132,7 @@ export async function fetchUserRepositories(
 
   const headers: HeadersInit = {
     "Content-Type": "application/json",
+    "User-Agent": "request",
   };
 
   // Add authorization if token is provided
