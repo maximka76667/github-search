@@ -1,34 +1,43 @@
-import * as React from "react"
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+/**
+ * @fileoverview Select dropdown component with Radix UI primitives.
+ * Provides a fully accessible select menu with keyboard navigation.
+ */
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
+/** Root select component wrapper. */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />
+  return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
+/** Select group for organizing related options. */
 function SelectGroup({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Group>) {
-  return <SelectPrimitive.Group data-slot="select-group" {...props} />
+  return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
+/** Select value display component that shows the selected option. */
 function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  return <SelectPrimitive.Value data-slot="select-value" {...props} />
+  return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+/** Select trigger button that opens the dropdown menu. */
 function SelectTrigger({
   className,
   size = "default",
   children,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size?: "sm" | "default"
+  size?: "sm" | "default";
 }) {
   return (
     <SelectPrimitive.Trigger
@@ -45,9 +54,10 @@ function SelectTrigger({
         <ChevronDownIcon className="size-4 opacity-50" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
-  )
+  );
 }
 
+/** Select dropdown content container with portal rendering and animations. */
 function SelectContent({
   className,
   children,
@@ -82,9 +92,10 @@ function SelectContent({
         <SelectScrollDownButton />
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
-  )
+  );
 }
 
+/** Label for select groups. */
 function SelectLabel({
   className,
   ...props
@@ -95,9 +106,10 @@ function SelectLabel({
       className={cn("text-muted-foreground px-2 py-1.5 text-xs", className)}
       {...props}
     />
-  )
+  );
 }
 
+/** Individual select option item with check indicator. */
 function SelectItem({
   className,
   children,
@@ -119,9 +131,10 @@ function SelectItem({
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
-  )
+  );
 }
 
+/** Visual separator between select items or groups. */
 function SelectSeparator({
   className,
   ...props
@@ -132,9 +145,10 @@ function SelectSeparator({
       className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
       {...props}
     />
-  )
+  );
 }
 
+/** Scroll up button for navigating long select lists. */
 function SelectScrollUpButton({
   className,
   ...props
@@ -150,9 +164,10 @@ function SelectScrollUpButton({
     >
       <ChevronUpIcon className="size-4" />
     </SelectPrimitive.ScrollUpButton>
-  )
+  );
 }
 
+/** Scroll down button for navigating long select lists. */
 function SelectScrollDownButton({
   className,
   ...props
@@ -168,7 +183,7 @@ function SelectScrollDownButton({
     >
       <ChevronDownIcon className="size-4" />
     </SelectPrimitive.ScrollDownButton>
-  )
+  );
 }
 
 export {
@@ -182,4 +197,4 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-}
+};

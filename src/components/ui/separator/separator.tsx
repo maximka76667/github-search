@@ -1,8 +1,14 @@
-import * as React from "react"
-import * as SeparatorPrimitive from "@radix-ui/react-separator"
+/**
+ * @fileoverview Separator component for visual dividers.
+ * Based on Radix UI separator primitive with horizontal and vertical orientations.
+ */
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
+import { cn } from "@/lib/utils";
+
+/** Separator component for creating horizontal or vertical dividing lines. */
 function Separator({
   className,
   orientation = "horizontal",
@@ -20,7 +26,7 @@ function Separator({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Separator }
+export { Separator };

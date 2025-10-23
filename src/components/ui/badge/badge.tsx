@@ -1,9 +1,18 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+/**
+ * @fileoverview Badge component for displaying labels and status indicators.
+ * Based on shadcn/ui with Radix UI primitives.
+ */
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 
+import { cn } from "@/lib/utils";
+
+/**
+ * Badge style variants using class-variance-authority.
+ * Supports default, secondary, destructive, and outline styles.
+ */
 const badgeVariants = cva(
   "inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
   {
@@ -23,8 +32,12 @@ const badgeVariants = cva(
       variant: "default",
     },
   }
-)
+);
 
+/**
+ * Badge component for displaying tags, labels, and status indicators.
+ * Can be rendered as a child component using the asChild prop.
+ */
 function Badge({
   className,
   variant,
@@ -32,7 +45,7 @@ function Badge({
   ...props
 }: React.ComponentProps<"span"> &
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "span"
+  const Comp = asChild ? Slot : "span";
 
   return (
     <Comp
@@ -40,7 +53,7 @@ function Badge({
       className={cn(badgeVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Badge, badgeVariants }
+export { Badge, badgeVariants };

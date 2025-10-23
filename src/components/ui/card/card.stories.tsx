@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
-import { Button } from "./button";
+import { Button } from "../button/button";
 
 const meta: Meta<typeof Card> = {
   title: "UI/Card",

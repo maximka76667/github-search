@@ -1,7 +1,13 @@
-import * as React from "react"
+/**
+ * @fileoverview Input component for text and form inputs.
+ * Based on shadcn/ui primitives with enhanced focus and validation states.
+ */
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
 
+import { cn } from "@/lib/utils";
+
+/** Input component with consistent styling for forms. Supports all standard input types. */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input
@@ -15,7 +21,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Input }
+export { Input };

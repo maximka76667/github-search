@@ -1,14 +1,36 @@
-import { RepositoryCard } from "@/components/features/RepositoryCard";
-import { RepositorySkeleton } from "@/components/features/RepositorySkeleton";
-import type Repository from "../types/Repository";
+/**
+ * @fileoverview Repository list component that displays filtered repositories in a grid layout.
+ */
 
+import { RepositoryCard } from "@/components/features/RepositoryCard/RepositoryCard";
+import { RepositorySkeleton } from "@/components/features/RepositorySkeleton/RepositorySkeleton";
+import type Repository from "../../../types/Repository";
+
+/**
+ * Props for the RepositoryList component.
+ * @interface
+ */
 interface RepositoryListProps {
+  /** Array of repositories to display. */
   repositories: Repository[];
+
+  /** Whether repositories are currently being loaded. */
   loading: boolean;
+
+  /** Text filter to apply to repository names. */
   searchFilter: string;
+
+  /** Language filter to apply ("all" or specific language name). */
   languageFilter: string;
 }
 
+/**
+ * List component that displays repositories in a responsive grid layout.
+ * Handles loading states, empty states, and applies search and language filters.
+ *
+ * @param props - Component props.
+ * @return The rendered repository list component.
+ */
 export function RepositoryList({
   repositories,
   loading,

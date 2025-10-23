@@ -1,7 +1,13 @@
-import * as React from "react"
+/**
+ * @fileoverview Card component and subcomponents for content containers.
+ * Based on shadcn/ui primitives.
+ */
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
 
+import { cn } from "@/lib/utils";
+
+/** Root card container with border and shadow. */
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -12,9 +18,10 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
+/** Card header section for titles, descriptions, and actions. */
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -25,9 +32,10 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
+/** Card title heading element. */
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -35,9 +43,10 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("leading-none font-semibold", className)}
       {...props}
     />
-  )
+  );
 }
 
+/** Card description text with muted styling. */
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -45,9 +54,10 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
-  )
+  );
 }
 
+/** Card action area positioned in the top-right corner of the header. */
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -58,9 +68,10 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
+/** Card main content area. */
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -68,9 +79,10 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("px-6", className)}
       {...props}
     />
-  )
+  );
 }
 
+/** Card footer section for actions or additional information. */
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -78,7 +90,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("flex items-center px-6 [.border-t]:pt-6", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
@@ -89,4 +101,4 @@ export {
   CardAction,
   CardDescription,
   CardContent,
-}
+};

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { RepositoryList } from "./RepositoryList";
-import type Repository from "../types/Repository";
+import type Repository from "../../../types/Repository";
 
 const mockRepositories: Repository[] = [
   {
