@@ -4,37 +4,43 @@ import type Repository from "../../../types/Repository";
 
 const mockRepositories: Repository[] = [
   {
-    id: 1,
+    id: "1",
     name: "react-portfolio",
     description:
       "A beautiful portfolio website built with React and Tailwind CSS",
-    html_url: "https://github.com/example/react-portfolio",
-    language: "TypeScript",
-    stargazers_count: 234,
-    forks_count: 45,
-    updated_at: "2024-10-15T10:30:00Z",
+    url: "https://github.com/example/react-portfolio",
+    primaryLanguage: {
+      name: "TypeScript",
+    },
+    stargazerCount: 234,
+    forkCount: 45,
+    updatedAt: "2024-10-15T10:30:00Z",
   },
   {
-    id: 2,
+    id: "2",
     name: "awesome-python-scripts",
     description:
       "Collection of useful Python automation scripts for everyday tasks",
-    html_url: "https://github.com/example/awesome-python-scripts",
-    language: "Python",
-    stargazers_count: 1250,
-    forks_count: 189,
-    updated_at: "2024-10-20T14:22:00Z",
+    url: "https://github.com/example/awesome-python-scripts",
+    primaryLanguage: {
+      name: "Python",
+    },
+    stargazerCount: 1250,
+    forkCount: 189,
+    updatedAt: "2024-10-20T14:22:00Z",
   },
   {
-    id: 3,
+    id: "3",
     name: "nodejs-api-starter",
     description:
       "RESTful API starter template with Express, TypeScript, and MongoDB",
-    html_url: "https://github.com/example/nodejs-api-starter",
-    language: "TypeScript",
-    stargazers_count: 567,
-    forks_count: 92,
-    updated_at: "2024-09-28T08:15:00Z",
+    url: "https://github.com/example/nodejs-api-starter",
+    primaryLanguage: {
+      name: "TypeScript",
+    },
+    stargazerCount: 567,
+    forkCount: 92,
+    updatedAt: "2024-09-28T08:15:00Z",
   },
 ];
 
@@ -120,14 +126,16 @@ export const NoMatches: Story = {
 export const ManyRepositories: Story = {
   args: {
     repositories: Array.from({ length: 12 }, (_, i) => ({
-      id: i + 1,
+      id: `${i + 1}`,
       name: `repo-${i + 1}`,
       description: `Description for repository ${i + 1}`,
-      html_url: `https://github.com/example/repo-${i + 1}`,
-      language: ["TypeScript", "JavaScript", "Python", "Go"][i % 4],
-      stargazers_count: Math.floor(Math.random() * 1000),
-      forks_count: Math.floor(Math.random() * 100),
-      updated_at: new Date(
+      url: `https://github.com/example/repo-${i + 1}`,
+      primaryLanguage: {
+        name: ["TypeScript", "JavaScript", "Python", "Go"][i % 4],
+      },
+      stargazerCount: Math.floor(Math.random() * 1000),
+      forkCount: Math.floor(Math.random() * 100),
+      updatedAt: new Date(
         Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
       ).toISOString(),
     })),

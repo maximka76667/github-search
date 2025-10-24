@@ -8,7 +8,6 @@ import { useState } from "react";
 import { SearchHeader } from "@/components/features/SearchHeader/SearchHeader";
 import { FilterBar } from "@/components/features/FilterBar/FilterBar";
 import { RepositoryList } from "@/components/features/RepositoryList/RepositoryList";
-import type Repository from "./types/Repository";
 import {
   Collapsible,
   CollapsibleContent,
