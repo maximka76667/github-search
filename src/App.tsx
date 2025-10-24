@@ -162,12 +162,14 @@ function App() {
         )}
 
         {/* Repository list */}
-        <RepositoryList
-          repositories={repositories}
-          loading={loading}
-          searchFilter={searchFilter}
-          languageFilter={languageFilter}
-        />
+        {!displayError && (
+          <RepositoryList
+            repositories={repositories}
+            loading={loading}
+            searchFilter={searchFilter}
+            languageFilter={languageFilter}
+          />
+        )}
       </div>
     </div>
   );
