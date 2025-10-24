@@ -44,8 +44,6 @@ function App() {
 
   const repositories = data?.user?.repositories?.nodes || [];
 
-  console.log(repositories);
-
   /**
    * Handles the search action by fetching repositories for the entered username.
    * Resets filters and clears previous results before fetching new data.
