@@ -10,6 +10,16 @@ import { MissingTokenError } from "./components/features/MissingTokenError/Missi
 const isDevelopment = import.meta.env.DEV;
 const token = import.meta.env.VITE_GITHUB_TOKEN;
 
+// DEBUG: Add these lines
+console.log("=== APOLLO CLIENT DEBUG ===");
+console.log("isDevelopment:", isDevelopment);
+console.log("token exists:", !!token);
+console.log(
+  "Will use URI:",
+  isDevelopment ? "https://api.github.com/graphql" : "/api/github"
+);
+console.log("========================");
+
 // Development: require token for direct API access
 // Production: use proxy endpoint (no token needed client-side)
 if (isDevelopment && !token) {
