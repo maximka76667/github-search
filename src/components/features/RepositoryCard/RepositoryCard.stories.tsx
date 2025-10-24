@@ -12,14 +12,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockRepository = {
-  id: 1,
+  id: "1",
   name: "awesome-project",
   description: "A really cool project",
-  html_url: "https://github.com/user/awesome-project",
-  language: "TypeScript",
-  stargazers_count: 1234,
-  forks_count: 56,
-  updated_at: "2024-01-15T10:00:00Z",
+  url: "https://github.com/user/awesome-project",
+  primaryLanguage: {
+    name: "TypeScript",
+  },
+  stargazerCount: 1234,
+  forkCount: 56,
+  updatedAt: "2024-01-15T10:00:00Z",
 };
 
 export const Default: Story = {
@@ -32,7 +34,7 @@ export const Default: Story = {
     // Test that the title is rendered and clickable
     const titleLink = canvas.getByRole("link", { name: /awesome-project/i });
     expect(titleLink).toBeInTheDocument();
-    expect(titleLink).toHaveAttribute("href", mockRepository.html_url);
+    expect(titleLink).toHaveAttribute("href", mockRepository.url);
 
     // Test that the language badge is displayed
     expect(canvas.getByText("TypeScript")).toBeInTheDocument();
