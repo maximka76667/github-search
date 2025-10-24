@@ -37,7 +37,7 @@ function App() {
   const [languageFilter, setLanguageFilter] = useState("all");
   const [isHeaderOpen, setIsHeaderOpen] = useState(true);
 
-  const [getRepositories, { loading, data }] = useLazyQuery<
+  const [getRepositories, { loading, data, error: queryError }] = useLazyQuery<
     GetUserRepositoriesResponse,
     GetUserRepositoriesVariables
   >(getUserRepositories);
@@ -87,6 +87,13 @@ function App() {
     }))
     .sort((a, b) => b.count - a.count)
     .map(({ language }) => language);
+
+  // Combine local validation error with GraphQL query error
+  const displayError =
+    error ||
+    (queryError
+      ? `User "${username}" not found. Please check the username and try again.`
+      : null);
 
   return (
     <div className="min-h-screen bg-background">
@@ -145,10 +152,10 @@ function App() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6 w-full max-w-7xl">
         {/* Error message */}
-        {error && (
+        {displayError && (
           <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive">
             <p className="font-medium">Error</p>
-            <p className="text-sm">{error}</p>
+            <p className="text-sm">{displayError}</p>
           </div>
         )}
 
