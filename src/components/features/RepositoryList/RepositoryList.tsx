@@ -75,7 +75,7 @@ export function RepositoryList({
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
       {filteredRepos.map((repo) => (
         <RepositoryCard key={repo.id} repository={repo} />
       ))}

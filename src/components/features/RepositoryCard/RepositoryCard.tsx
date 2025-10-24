@@ -133,7 +133,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             </a>
           )}
 
-          <div className="flex items-center gap-1.5 sm:gap-2 ml-auto text-gray-500">
+          <div className="flex items-center gap-1.5 sm:gap-2 ml-0 sm:ml-auto text-gray-500">
             <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             <span className="text-xs sm:text-sm font-medium">
               {formatDate(repository.updatedAt)}
