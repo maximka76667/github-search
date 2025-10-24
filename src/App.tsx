@@ -32,6 +32,8 @@ function App() {
   const [username, setUsername] = useState("");
   // const [repositories, setRepositories] = useState<Repository[]>([]);
   // const [loading, setLoading] = useState(false);
+  const [searchedUsername, setSearchedUsername] = useState<string | null>(null);
+
   const [error, setError] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("all");
@@ -57,9 +59,9 @@ function App() {
     }
 
     setError(null);
-    // setRepositories([]);
     setSearchFilter("");
     setLanguageFilter("all");
+    setSearchedUsername(username.trim());
 
     getRepositories({
       variables: {
@@ -92,7 +94,7 @@ function App() {
   const displayError =
     error ||
     (queryError
-      ? `User "${username}" not found. Please check the username and try again.`
+      ? `User "${searchedUsername}" not found. Please check the username and try again.`
       : null);
 
   return (
