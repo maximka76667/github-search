@@ -35,18 +35,18 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
   const languageColor = getLanguageColor(repository.primaryLanguage?.name);
 
   return (
-    <Card className="group relative flex flex-col h-full overflow-hidden border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 px-1 py-4 gap-4">
+    <Card className="group relative flex flex-col h-full overflow-hidden border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 px-1 py-3 sm:py-4 gap-3 sm:gap-4">
       {/* Gradient accent bar on top */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-      <CardHeader className="px-6 pt-6 pb-3 space-y-3">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="p-2.5 rounded-lg bg-linear-to-br from-gray-50 to-gray-100 group-hover:from-blue-50 group-hover:to-purple-50 transition-colors duration-300">
-              <FolderGit2 className="h-4 w-4 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
+      <CardHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-2 sm:pb-3 space-y-2 sm:space-y-3">
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+            <div className="p-2 sm:p-2.5 rounded-lg bg-linear-to-br from-gray-50 to-gray-100 group-hover:from-blue-50 group-hover:to-purple-50 transition-colors duration-300">
+              <FolderGit2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
             </div>
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-xl font-bold line-clamp-1">
+              <CardTitle className="text-lg sm:text-xl font-bold line-clamp-1">
                 <a
                   href={repository.url}
                   target="_blank"
@@ -76,7 +76,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
           </Button>
         </div>
 
-        <CardDescription className="line-clamp-2 text-sm text-gray-600 leading-relaxed min-h-10 max-w-lg mx-auto text-center">
+        <CardDescription className="line-clamp-2 text-xs sm:text-sm text-gray-600 leading-relaxed min-h-8 sm:min-h-10 max-w-lg mx-auto text-center">
           {repository.description || (
             <span className="italic text-gray-400">
               No description provided
@@ -85,8 +85,8 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="px-6 pb-6 mt-auto">
-        <div className="flex items-center gap-4 text-sm bg-linear-to-br from-gray-50 to-gray-100/50 rounded-xl px-4 py-3 border border-gray-200/50 flex-wrap">
+      <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6 mt-auto">
+        <div className="flex items-center gap-2 sm:gap-4 text-sm bg-linear-to-br from-gray-50 to-gray-100/50 rounded-xl px-3 sm:px-4 py-2 sm:py-3 border border-gray-200/50 flex-wrap">
           {repository.primaryLanguage?.name && (
             <Badge
               variant="outline"
@@ -133,9 +133,9 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             </a>
           )}
 
-          <div className="flex items-center gap-2 ml-auto text-gray-500">
-            <Clock className="h-3.5 w-3.5" />
-            <span className="text-sm font-medium">
+          <div className="flex items-center gap-1.5 sm:gap-2 ml-auto text-gray-500">
+            <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            <span className="text-xs sm:text-sm font-medium">
               {formatDate(repository.updatedAt)}
             </span>
           </div>

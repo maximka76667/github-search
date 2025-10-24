@@ -94,15 +94,15 @@ function App() {
       <Collapsible
         open={isHeaderOpen}
         onOpenChange={setIsHeaderOpen}
-        className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg w-full border-b border-border/40 py-10"
+        className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg w-full border-b border-border/40 py-4 sm:py-6 md:py-10"
       >
         <div className="container mx-auto px-4 w-full max-w-5xl">
           <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold tracking-tight">
+            <div className="flex-1 flex flex-col gap-2 items-center justify-center">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
                 GitHub Repository Explorer
               </h1>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs sm:text-sm">
                 Search for any GitHub user and explore their repositories
               </p>
             </div>
