@@ -32,7 +32,7 @@ interface RepositoryCardProps {
  * @return {JSX.Element} The rendered repository card component.
  */
 export function RepositoryCard({ repository }: RepositoryCardProps) {
-  const languageColor = getLanguageColor(repository.language);
+  const languageColor = getLanguageColor(repository.primaryLanguage?.name);
 
   return (
     <Card className="group relative flex flex-col h-full overflow-hidden border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 px-1 py-4 gap-4">
@@ -48,7 +48,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             <div className="flex-1 min-w-0">
               <CardTitle className="text-xl font-bold line-clamp-1">
                 <a
-                  href={repository.html_url}
+                  href={repository.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
@@ -66,7 +66,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             asChild
           >
             <a
-              href={repository.html_url}
+              href={repository.url}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open repository in new tab"
@@ -87,7 +87,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
 
       <CardContent className="px-6 pb-6 mt-auto">
         <div className="flex items-center gap-4 text-sm bg-linear-to-br from-gray-50 to-gray-100/50 rounded-xl px-4 py-3 border border-gray-200/50 flex-wrap">
-          {repository.language && (
+          {repository.primaryLanguage?.name && (
             <Badge
               variant="outline"
               className="bg-white/80 border-gray-200 text-gray-700 hover:bg-white flex items-center gap-1.5 px-2.5 py-0.5"
@@ -96,12 +96,14 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
                 className="w-2 h-2 rounded-full shrink-0"
                 style={{ backgroundColor: languageColor }}
               />
-              <span className="text-xs font-medium">{repository.language}</span>
+              <span className="text-xs font-medium">
+                {repository.primaryLanguage?.name}
+              </span>
             </Badge>
           )}
 
           <a
-            href={`${repository.html_url}/stargazers`}
+            href={`${repository.url}/stargazers`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 group/star hover:scale-110 transition-transform duration-200"
@@ -112,13 +114,13 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
               <Star className="absolute inset-0 h-4 w-4 text-yellow-500 opacity-0 group-hover/star:opacity-100 group-hover/star:fill-yellow-500 transition-all duration-200" />
             </div>
             <span className="font-semibold font-mono text-gray-700 group-hover/star:text-yellow-600 transition-colors duration-200">
-              {formatNumber(repository.stargazers_count)}
+              {formatNumber(repository.stargazerCount)}
             </span>
           </a>
 
-          {repository.forks_count > 0 && (
+          {repository.forkCount > 0 && (
             <a
-              href={`${repository.html_url}/forks`}
+              href={`${repository.url}/forks`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 group/fork hover:scale-110 transition-transform duration-200"
@@ -126,7 +128,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             >
               <GitFork className="h-4 w-4 text-gray-400 group-hover/fork:text-blue-500 transition-colors duration-200" />
               <span className="font-semibold font-mono text-gray-700 group-hover/fork:text-blue-600 transition-colors duration-200">
-                {formatNumber(repository.forks_count)}
+                {formatNumber(repository.forkCount)}
               </span>
             </a>
           )}
@@ -134,7 +136,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
           <div className="flex items-center gap-2 ml-auto text-gray-500">
             <Clock className="h-3.5 w-3.5" />
             <span className="text-sm font-medium">
-              {formatDate(repository.updated_at)}
+              {formatDate(repository.updatedAt)}
             </span>
           </div>
         </div>

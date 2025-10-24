@@ -24,7 +24,7 @@ export function cn(...inputs: ClassValue[]) {
  * @param {string | null} language - The programming language name.
  * @return {string} Hex color code for the language, or default gray (#6b7280) if not found.
  */
-export function getLanguageColor(language: string | null): string {
+export function getLanguageColor(language: string | undefined): string {
   if (!language) return "#6b7280"; // Default gray color
   return languageColors[language] || "#6b7280";
 }

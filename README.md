@@ -27,7 +27,7 @@ A modern, responsive web application for searching and exploring GitHub user rep
 
 - Node.js (v18 or higher)
 - npm, yarn, or bun package manager
-- GitHub Personal Access Token (optional, but recommended for higher rate limits)
+- GitHub Personal Access Token (necessary for accessing GitHub API)
 
 ## 🏃 How to Run the Project
 

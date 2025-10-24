@@ -8,7 +8,7 @@
  */
 export default interface Repository {
   /** Unique identifier for the repository. */
-  id: number;
+  id: string;
 
   /** The name of the repository. */
   name: string;
@@ -17,17 +17,19 @@ export default interface Repository {
   description: string | null;
 
   /** The URL to access the repository on GitHub. */
-  html_url: string;
+  url: string;
 
   /** Primary programming language used in the repository. Null if not specified. */
-  language: string | null;
+  primaryLanguage: {
+    name: string;
+  } | null;
 
   /** Total number of stars the repository has received. */
-  stargazers_count: number;
+  stargazerCount: number;
 
   /** Total number of times the repository has been forked. */
-  forks_count: number;
+  forkCount: number;
 
   /** ISO 8601 timestamp of when the repository was last updated. */
-  updated_at: string;
+  updatedAt: string;
 }

@@ -52,7 +52,9 @@ export function RepositoryList({
       .toLowerCase()
       .includes(searchFilter.toLowerCase());
     const matchesLanguage =
-      languageFilter === "all" || repo.language === languageFilter;
+      languageFilter === "all" ||
+      repo.primaryLanguage?.name?.toLowerCase() ===
+        languageFilter.toLowerCase();
     return matchesName && matchesLanguage;
   });
 

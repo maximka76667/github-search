@@ -9,7 +9,6 @@ import { SearchHeader } from "@/components/features/SearchHeader/SearchHeader";
 import { FilterBar } from "@/components/features/FilterBar/FilterBar";
 import { RepositoryList } from "@/components/features/RepositoryList/RepositoryList";
 import type Repository from "./types/Repository";
-import { fetchUserRepositories } from "./services/githubService";
 import {
   Collapsible,
   CollapsibleContent,
@@ -17,6 +16,12 @@ import {
 } from "./components/ui/collapsible/collapsible";
 import { Button } from "./components/ui/button/button";
 import { ChevronDown } from "lucide-react";
+import { useLazyQuery } from "@apollo/client/react";
+import { getUserRepositories } from "./graphql/getUserRepositories";
+import type {
+  GetUserRepositoriesResponse,
+  GetUserRepositoriesVariables,
+} from "./types/GraphQLReponse";
 
 /**
  * Root application component that provides GitHub repository search and exploration.
@@ -26,12 +31,21 @@ import { ChevronDown } from "lucide-react";
  */
 function App() {
   const [username, setUsername] = useState("");
-  const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [loading, setLoading] = useState(false);
+  // const [repositories, setRepositories] = useState<Repository[]>([]);
+  // const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("all");
   const [isHeaderOpen, setIsHeaderOpen] = useState(true);
+
+  const [getRepositories, { loading, data }] = useLazyQuery<
+    GetUserRepositoriesResponse,
+    GetUserRepositoriesVariables
+  >(getUserRepositories);
+
+  const repositories = data?.user?.repositories?.nodes || [];
+
+  console.log(repositories);
 
   /**
    * Handles the search action by fetching repositories for the entered username.
@@ -45,43 +59,34 @@ function App() {
       return;
     }
 
-    setLoading(true);
     setError(null);
-    setRepositories([]);
+    // setRepositories([]);
     setSearchFilter("");
     setLanguageFilter("all");
 
-    try {
-      const token = import.meta.env.VITE_GITHUB_TOKEN;
-      const repos = await fetchUserRepositories(username.trim(), token);
-
-      console.log("repos", repos[0]);
-      if (repos.length === 0) {
-        setError(`User "${username}" has no public repositories`);
-      } else {
-        setRepositories(repos);
-      }
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to fetch repositories";
-      setError(errorMessage);
-      console.error("Error fetching repositories:", err);
-    } finally {
-      setLoading(false);
-    }
+    getRepositories({
+      variables: {
+        username: username.trim(),
+        first: 30,
+      },
+    });
   };
 
   // Extract unique languages from repositories and sort by count of repositories descending
   const availableLanguages = Array.from(
     new Set(
       repositories
-        .map((repo) => repo.language)
-        .filter((language): language is string => language !== null)
+        .map((repo) => repo.primaryLanguage?.name)
+        .filter(
+          (languageName): languageName is string => languageName !== undefined
+        )
     )
   )
     .map((language) => ({
       language,
-      count: repositories.filter((repo) => repo.language === language).length,
+      count: repositories.filter(
+        (repo) => repo.primaryLanguage?.name === language
+      ).length,
     }))
     .sort((a, b) => b.count - a.count)
     .map(({ language }) => language);
