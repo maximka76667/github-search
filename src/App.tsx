@@ -107,7 +107,7 @@ function App() {
       >
         <div className="container mx-auto px-4 w-full max-w-5xl">
           <div className="flex items-center justify-between">
-            <div className="flex-1 flex flex-col gap-2 items-center justify-center">
+            <div className="flex-1 flex flex-col gap-1 sm:gap-2 items-center justify-center">
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
                 GitHub Repository Explorer
               </h1>
