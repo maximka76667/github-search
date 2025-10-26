@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "storybook/test";
+import { expect } from "storybook/test";
 import { RepositorySkeleton } from "./RepositorySkeleton";
 
 const meta: Meta<typeof RepositorySkeleton> = {
@@ -15,7 +15,6 @@ type Story = StoryObj<typeof RepositorySkeleton>;
 
 export const Default: Story = {
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
 
     // Test that card structure exists
     const card = canvasElement.querySelector('[class*="card"]');
@@ -32,8 +31,6 @@ export const Multiple: Story = {
     </div>
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     // Test that multiple skeletons render in grid
     const grid = canvasElement.querySelector(".grid");
     expect(grid).toBeInTheDocument();

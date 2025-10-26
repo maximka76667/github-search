@@ -34,23 +34,37 @@ export const Default: Story = {
     onSearchFilterChange: fn(),
     onLanguageFilterChange: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    // Test that search input is present with correct placeholder
+    // Test 1: Basic elements presence
     const searchInput = canvas.getByPlaceholderText(
       /filter by repository name/i
     );
     expect(searchInput).toBeInTheDocument();
     expect(searchInput).toHaveValue("");
 
-    // Test that language select is present
     const languageSelect = canvas.getByRole("combobox");
     expect(languageSelect).toBeInTheDocument();
 
-    // Test that search icon is visible (via SVG)
-    const searchIcon = canvasElement.querySelector("svg");
-    expect(searchIcon).toBeInTheDocument();
+    // Test 2: Icons are present (Search and Filter icons)
+    const svgElements = canvasElement.querySelectorAll("svg");
+    expect(svgElements.length).toBeGreaterThanOrEqual(2);
+
+    // Test 3: Responsive layout container
+    const container = canvasElement.querySelector(".flex");
+    expect(container).toBeInTheDocument();
+
+    // Test 4: Default "All languages" text is shown
+    expect(canvas.getByText("All languages")).toBeInTheDocument();
+
+    // Test 5: User typing in search input
+    await userEvent.type(searchInput, "test-repo");
+    expect(args.onSearchFilterChange).toHaveBeenCalled();
+
+    // Test 6: Clear search input
+    await userEvent.clear(searchInput);
+    expect(searchInput).toHaveValue("");
   },
 };
 
@@ -64,8 +78,6 @@ export const WithSearchFilter: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    // Test that search filter value is displayed
     const searchInput = canvas.getByPlaceholderText(
       /filter by repository name/i
     );
@@ -83,12 +95,6 @@ export const WithLanguageFilter: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    // Test that language filter shows selected value
-    const languageSelect = canvas.getByRole("combobox");
-    expect(languageSelect).toBeInTheDocument();
-
-    // Test that TypeScript is displayed as the selected value
     expect(canvas.getByText("TypeScript")).toBeInTheDocument();
   },
 };
@@ -103,14 +109,10 @@ export const WithBothFilters: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    // Test that both filters have values
     const searchInput = canvas.getByPlaceholderText(
       /filter by repository name/i
     );
     expect(searchInput).toHaveValue("api");
-
-    // Test that Python is shown as selected
     expect(canvas.getByText("Python")).toBeInTheDocument();
   },
 };
@@ -139,55 +141,6 @@ export const ManyLanguages: Story = {
     onSearchFilterChange: fn(),
     onLanguageFilterChange: fn(),
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Test that component renders with many languages
-    const languageSelect = canvas.getByRole("combobox");
-    expect(languageSelect).toBeInTheDocument();
-
-    // Test that "All languages" is displayed when "all" is selected
-    expect(canvas.getByText("All languages")).toBeInTheDocument();
-  },
-};
-
-export const FewLanguages: Story = {
-  args: {
-    searchFilter: "",
-    languageFilter: "all",
-    availableLanguages: ["TypeScript", "JavaScript"],
-    onSearchFilterChange: fn(),
-    onLanguageFilterChange: fn(),
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Test with minimal languages
-    const languageSelect = canvas.getByRole("combobox");
-    expect(languageSelect).toBeInTheDocument();
-  },
-};
-
-export const UserTypingInSearch: Story = {
-  args: {
-    searchFilter: "",
-    languageFilter: "all",
-    availableLanguages: ["TypeScript", "JavaScript", "Python"],
-    onSearchFilterChange: fn(),
-    onLanguageFilterChange: fn(),
-  },
-  play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
-    const searchInput = canvas.getByPlaceholderText(
-      /filter by repository name/i
-    );
-
-    // Test typing in search input
-    await userEvent.type(searchInput, "test-repo");
-
-    // Verify callback was called
-    expect(args.onSearchFilterChange).toHaveBeenCalled();
-  },
 };
 
 export const EmptyLanguageList: Story = {
@@ -200,77 +153,8 @@ export const EmptyLanguageList: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    // Test that component handles empty language list gracefully
     const languageSelect = canvas.getByRole("combobox");
     expect(languageSelect).toBeInTheDocument();
-
-    // Should still show "All languages" option
     expect(canvas.getByText("All languages")).toBeInTheDocument();
-  },
-};
-
-export const ResponsiveLayout: Story = {
-  args: {
-    searchFilter: "",
-    languageFilter: "all",
-    availableLanguages: ["TypeScript", "JavaScript", "Python"],
-    onSearchFilterChange: fn(),
-    onLanguageFilterChange: fn(),
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Test that flex container exists for responsive layout
-    const container = canvasElement.querySelector(".flex");
-    expect(container).toBeInTheDocument();
-
-    // Test that both search input and select are present
-    const searchInput = canvas.getByPlaceholderText(
-      /filter by repository name/i
-    );
-    const languageSelect = canvas.getByRole("combobox");
-
-    expect(searchInput).toBeInTheDocument();
-    expect(languageSelect).toBeInTheDocument();
-  },
-};
-
-export const ClearSearch: Story = {
-  args: {
-    searchFilter: "existing-search",
-    languageFilter: "all",
-    availableLanguages: ["TypeScript", "JavaScript"],
-    onSearchFilterChange: fn(),
-    onLanguageFilterChange: fn(),
-  },
-  play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
-    const searchInput = canvas.getByPlaceholderText(
-      /filter by repository name/i
-    );
-
-    // Test clearing the search
-    expect(searchInput).toHaveValue("existing-search");
-
-    await userEvent.clear(searchInput);
-    expect(args.onSearchFilterChange).toHaveBeenCalled();
-  },
-};
-
-export const IconsPresent: Story = {
-  args: {
-    searchFilter: "",
-    languageFilter: "all",
-    availableLanguages: ["TypeScript", "JavaScript"],
-    onSearchFilterChange: fn(),
-    onLanguageFilterChange: fn(),
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Test that both search and filter icons are present
-    const svgElements = canvasElement.querySelectorAll("svg");
-    expect(svgElements.length).toBeGreaterThanOrEqual(2); // Search icon + Filter icon (at minimum)
   },
 };

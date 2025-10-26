@@ -78,8 +78,6 @@ export const WithFullInstructions: Story = {
 
 export const IconAndLayout: Story = {
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     // Test that warning icon SVG is present
     const svg = canvasElement.querySelector("svg");
     expect(svg).toBeInTheDocument();

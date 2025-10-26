@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, within } from "storybook/test";
 import { SearchHeader } from "./SearchHeader";
 
 const meta: Meta<typeof SearchHeader> = {
@@ -28,7 +28,7 @@ export const Default: Story = {
     username: "",
     loading: false,
   },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     // Test that input is present and interactive
@@ -47,7 +47,7 @@ export const WithUsername: Story = {
     username: "octocat",
     loading: false,
   },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     // Test that input has the correct value

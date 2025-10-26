@@ -100,8 +100,6 @@ export const Loading: Story = {
     languageFilter: "all",
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
     // Test that skeleton loaders are shown
     // The RepositorySkeleton components should be rendered
     // We can check for the grid container
