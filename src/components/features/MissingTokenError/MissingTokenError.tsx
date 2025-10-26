@@ -2,13 +2,20 @@
  * @fileoverview Error component displayed when GitHub token is missing.
  */
 
+/**
+ * Error screen component that displays when the required GitHub Personal Access Token
+ * is not configured in the environment. Provides instructions for creating and configuring
+ * the token, with helpful links to GitHub settings.
+ *
+ * @return {JSX.Element} The rendered error screen with setup instructions.
+ */
 export function MissingTokenError() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-destructive/10 border-2 border-destructive/50 rounded-lg p-8">
         <div className="flex items-start gap-4">
           <svg
-            className="w-8 h-8 text-destructive flex-shrink-0 mt-1"
+            className="w-8 h-8 text-destructive shrink-0 mt-1"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -58,7 +65,7 @@ export function MissingTokenError() {
                   GitHub Settings → Personal Access Tokens
                 </a>
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm">
                 Select the <strong>public_repo</strong> scope for read access to
                 public repositories.
               </p>

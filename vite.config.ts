@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Vite configuration for the GitHub Repository Explorer application.
+ * Configures React, TypeScript, Tailwind CSS, and Vitest for testing with Storybook integration.
+ */
+
 /// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
@@ -12,7 +17,12 @@ const dirname =
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
+/**
+ * Vite configuration with React SWC, Tailwind CSS, and Vitest integration.
+ * Configures path aliases, test coverage, and Storybook-based testing.
+ *
+ * More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
+ */
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -21,6 +31,20 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      provider: "v8",
+      include: ["src/components/**/*.{ts,tsx}"],
+      exclude: [
+        "**/*.stories.{ts,tsx}",
+        "**/*.config.{ts,js}",
+        "api/**",
+        "src/types/**",
+        "src/graphql/**",
+        "src/constants/**",
+        "src/main.tsx",
+        "src/**/*.d.ts",
+      ],
+    },
     projects: [
       {
         extends: true,
@@ -29,6 +53,8 @@ export default defineConfig({
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({
             configDir: path.join(dirname, ".storybook"),
+            storybookUrl: "http://localhost:6006",
+            storybookScript: "npm run storybook -- --ci",
           }),
         ],
         test: {
