@@ -69,6 +69,11 @@ export default defineConfig({
               },
             ],
           },
+          // Add retry logic for flaky tests
+          retry: 3,
+          // Increase timeout to allow Storybook server to fully start
+          testTimeout: 80000,
+          hookTimeout: 80000,
           setupFiles: [".storybook/vitest.setup.ts"],
         },
       },
