@@ -20,7 +20,7 @@ A modern, responsive web application for searching and exploring GitHub user rep
 - Tailwind CSS 4
 - Apollo Client (GraphQL client)
 - GitHub GraphQL API v4
-- Radix UI Components
+- ShadCN UI Components
 - Storybook (Component documentation)
 - Vitest (Testing framework)
 
