@@ -40,12 +40,6 @@ export function SearchHeader({
   return (
     <div className="space-y-4 pt-2 pb-6">
       <div className="text-center space-y-2">
-        {/* <h1 className="text-3xl font-bold tracking-tight">
-          GitHub Repository Explorer
-        </h1> */}
-        {/* <p className="text-muted-foreground text-sm">
-          Search for any GitHub user and explore their repositories
-        </p> */}
       </div>
 
       <div className="flex gap-2 max-w-xl mx-auto">

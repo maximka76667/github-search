@@ -61,9 +61,12 @@ export function FilterBar({
       </div>
 
       <Select value={languageFilter} onValueChange={onLanguageFilterChange}>
-        <SelectTrigger className="w-full sm:w-[200px]">
+        <SelectTrigger
+          aria-labelledby="language-filter-label"
+          className="w-full sm:w-[200px]"
+        >
           <Filter className="h-4 w-4 mr-2" />
-          <SelectValue placeholder="All languages" />
+          <SelectValue id="language-filter-label" placeholder="All languages" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All languages</SelectItem>

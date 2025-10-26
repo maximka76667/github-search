@@ -45,13 +45,13 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             <div className="p-2 sm:p-2.5 rounded-lg bg-linear-to-br from-gray-50 to-gray-100 group-hover:from-blue-50 group-hover:to-purple-50 transition-colors duration-300">
               <FolderGit2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 text-center">
               <CardTitle className="text-lg sm:text-xl font-bold line-clamp-1">
                 <a
                   href={repository.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+                  className="text-gray-900 hover:text-blue-600 transition-all duration-200"
                   aria-label="Open repository"
                 >
                   {repository.name}
@@ -78,7 +78,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
 
         <CardDescription className="line-clamp-2 text-xs sm:text-sm text-gray-600 leading-relaxed min-h-8 sm:min-h-10 max-w-lg mx-auto text-center">
           {repository.description || (
-            <span className="italic text-gray-400">
+            <span className="italic text-gray-500">
               No description provided
             </span>
           )}
@@ -86,7 +86,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
       </CardHeader>
 
       <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6 mt-auto">
-        <div className="flex items-center gap-2 sm:gap-4 text-sm bg-linear-to-br from-gray-50 to-gray-100/50 rounded-xl px-3 sm:px-4 py-2 sm:py-3 border border-gray-200/50 flex-wrap">
+        <div className="flex items-center gap-2 sm:gap-4 text-sm bg-gray-50 rounded-xl px-3 sm:px-4 py-2 sm:py-3 border border-gray-200/50 flex-wrap">
           {repository.primaryLanguage?.name && (
             <Badge
               variant="outline"
@@ -106,7 +106,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
             href={`${repository.url}/stargazers`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 group/star hover:scale-110 transition-transform duration-200"
+            className="flex items-center gap-2 group/star"
             aria-label="Star this repository"
           >
             <div className="relative">
@@ -123,7 +123,7 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
               href={`${repository.url}/forks`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 group/fork hover:scale-110 transition-transform duration-200"
+              className="flex items-center gap-2 group/fork"
               aria-label="View repository forks"
             >
               <GitFork className="h-4 w-4 text-gray-400 group-hover/fork:text-blue-500 transition-colors duration-200" />
