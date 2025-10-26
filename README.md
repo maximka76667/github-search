@@ -9,7 +9,7 @@ A modern, responsive web application for searching and exploring GitHub user rep
 - Filter repositories by name (search)
 - Filter repositories by programming language
 - Modern, responsive UI with Tailwind CSS
-- Real-time repository statistics (stars, forks, last update)
+- Repository statistics (stars, forks, last update)
 - Language color coding for easy identification
 - Collapsible header for better content viewing
 
