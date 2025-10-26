@@ -18,6 +18,7 @@ A modern, responsive web application for searching and exploring GitHub user rep
 - React 19 + TypeScript
 - Vite 7 (Build tool)
 - Tailwind CSS 4
+- Apollo Client (GraphQL client)
 - GitHub GraphQL API v4
 - Radix UI Components
 - Storybook (Component documentation)
@@ -27,7 +28,7 @@ A modern, responsive web application for searching and exploring GitHub user rep
 
 - Node.js (v18 or higher)
 - npm, yarn, or bun package manager
-- GitHub Personal Access Token (necessary for accessing GitHub API)
+- **GitHub Personal Access Token** (required for development - [get one here](https://github.com/settings/tokens))
 
 ## 🏃 How to Run the Project
 
@@ -58,7 +59,7 @@ Using bun:
 bun install
 ```
 
-### 3. Set up environment variables (Optional but Recommended)
+### 3. Set up environment variables (Required for Development)
 
 Create a `.env` file in the root directory:
 
@@ -66,15 +67,19 @@ Create a `.env` file in the root directory:
 VITE_GITHUB_TOKEN=your_github_personal_access_token
 ```
 
+**⚠️ Important:** The GitHub token is **required** for the application to work in development mode. Without it, the app will display an error screen with setup instructions.
+
 **How to get a GitHub Personal Access Token:**
 
-1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Click "Generate new token"
-3. Select `public_repo` scope
-4. Generate and copy the token
-5. Add it to your `.env` file
+1. Go to [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens)
+2. Click "Generate new token (classic)"
+3. Give it a descriptive name (e.g., "GitHub Repository Explorer")
+4. Select the `public_repo` scope (read access to public repositories)
+5. Click "Generate token" at the bottom
+6. Copy the generated token immediately (you won't be able to see it again)
+7. Add it to your `.env` file as shown above
 
-> **Note:** Without a token, you're limited to 60 requests/hour. With authentication, you get 5,000 requests/hour.
+> **Note:** In development mode, the app connects directly to GitHub's GraphQL API using your token. In production, the app uses a server-side proxy endpoint to keep the token secure.
 
 ### 4. Start the development server
 
@@ -164,19 +169,57 @@ This creates a static Storybook build in the `storybook-static` folder.
 6. **Click on repository card title** to visit it on GitHub
 7. **Toggle the header** using the chevron button to maximize viewing space
 
+## 🏗️ API Architecture & Proxy Setup
+
+This application uses a dual-mode API architecture to balance development convenience with production security:
+
+### Development Mode (Local)
+
+In development, the app connects **directly to GitHub's GraphQL API** using your personal access token:
+
+- API Endpoint: `https://api.github.com/graphql`
+- Authentication: Bearer token from `VITE_GITHUB_TOKEN` environment variable
+- Token is exposed only in your local environment (never committed to version control)
+- **Token is required** - the app will not run without it
+
+### Production Mode (Deployed)
+
+In production, the app uses a **server-side proxy** to keep your GitHub token secure:
+
+- Frontend: Makes requests to `/api/github` (relative path)
+- Backend Proxy: Located in `api/github.js` (Vercel serverless function)
+- The proxy forwards requests to GitHub's API with the token stored securely on the server
+- Client-side code never has access to the token
+
+**Setting up the production proxy:**
+
+1. **Deploy the serverless function**: The `api/github.js` file is automatically deployed as a serverless function on Vercel or similar platforms
+2. **Configure environment variable**: Set `GITHUB_TOKEN` (not `VITE_GITHUB_TOKEN`) in your deployment platform's environment settings
+3. **Token security**: The token is only accessible server-side and never exposed to the client
+
+**Proxy benefits:**
+
+- ✅ Keeps your GitHub token secure and never exposed to clients
+- ✅ Prevents token theft from browser DevTools or network inspection
+- ✅ Centralizes rate limiting and request monitoring
+- ✅ Allows token rotation without redeploying the frontend
+
 ## 📝 Project Structure
 
 ```
 github-search/
+├── api/
+│   └── github.js             # Serverless proxy for GitHub API (production)
 ├── src/
 │   ├── components/
 │   │   ├── features/          # Feature components
 │   │   │   ├── FilterBar/
+│   │   │   ├── MissingTokenError/
 │   │   │   ├── RepositoryCard/
 │   │   │   ├── RepositoryList/
 │   │   │   ├── RepositorySkeleton/
 │   │   │   └── SearchHeader/
-│   │   └── ui/                # Reusable UI components
+│   │   └── ui/                # Reusable UI components (shadcn/ui)
 │   │       ├── badge/
 │   │       ├── button/
 │   │       ├── card/
@@ -186,65 +229,26 @@ github-search/
 │   │       ├── separator/
 │   │       └── skeleton/
 │   ├── constants/             # Constants (language colors, etc.)
+│   ├── graphql/               # GraphQL queries
 │   ├── lib/                   # Utility functions
-│   ├── services/              # API services (GitHub)
 │   ├── types/                 # TypeScript type definitions
 │   ├── App.tsx               # Main application component
-│   └── main.tsx              # Application entry point
+│   └── main.tsx              # Application entry point & Apollo Client setup
 ├── public/                    # Static assets
-└── .storybook/               # Storybook configuration
+├── .storybook/               # Storybook configuration
+└── coverage/                 # Test coverage reports
 ```
 
-## 🔮 Future Improvements
+## 🔮 Potential Improvements
 
-### Features
-
-- [ ] **Pagination Support** - Load more than 30 repositories per user with infinite scroll or pagination
-- [ ] **Advanced Sorting** - Sort repositories by stars, forks, name, or last updated date
-- [ ] **Repository Details Modal** - Show detailed stats including contributors, issues, and pull requests
-- [ ] **Search History** - Remember and suggest recently searched users
-- [ ] **Bookmarking/Favorites** - Save favorite repositories to local storage
-- [ ] **Dark/Light Mode Toggle** - User-selectable theme with system preference detection
-- [ ] **Organization Support** - Search for organization repositories in addition to users
-- [ ] **Multi-User Comparison** - Compare repositories across different users side-by-side
-- [ ] **Export Functionality** - Export repository lists as CSV, JSON, or PDF
-- [ ] **Repository Topics/Tags** - Display and filter by repository topics
-- [ ] **Advanced Filters** - Filter by star count range, fork count, last update date range
-- [ ] **User Profile Display** - Show user avatar, bio, and statistics
-
-### Technical Enhancements
-
-- [ ] **Comprehensive Unit Tests** - Add unit tests for all components and services
-- [ ] **E2E Testing** - Implement end-to-end tests using Playwright
-- [ ] **Error Boundaries** - Add React error boundaries for graceful error handling
-- [ ] **Request Caching** - Implement caching strategy to reduce API calls and improve performance
-- [ ] **Rate Limit Display** - Show remaining API rate limit to users
-- [ ] **Progressive Web App (PWA)** - Make the app installable with offline support
-- [ ] **Performance Monitoring** - Integrate analytics and performance tracking
-- [ ] **SEO Optimization** - Add meta tags and improve SEO for better discoverability
-- [ ] **Code Splitting** - Implement lazy loading for better initial load performance
-- [ ] **GraphQL Subscriptions** - Real-time updates when repository data changes
-
-### UX/UI Improvements
-
-- [ ] **Smooth Animations** - Add transitions and micro-interactions for better UX
-- [ ] **Enhanced Loading States** - More sophisticated skeleton loaders and progress indicators
-- [ ] **Empty State Illustrations** - Add custom illustrations for empty and error states
-- [ ] **Keyboard Shortcuts** - Add keyboard navigation support for power users
-- [ ] **Accessibility Audit** - Comprehensive WCAG 2.1 AA compliance review
-- [ ] **Internationalization (i18n)** - Support for multiple languages
-- [ ] **Responsive Table View** - Alternative table layout for repository data
-- [ ] **Search Suggestions** - Auto-complete for GitHub usernames
-- [ ] **Toast Notifications** - Non-intrusive notifications for user actions
-- [ ] **Repository Cards Customization** - Let users choose what information to display
-
-### DevOps & Deployment
-
-- [ ] **CI/CD Pipeline** - Automated testing and deployment workflow
-- [ ] **Docker Support** - Containerize the application for easy deployment
-- [ ] **Environment-based Configuration** - Better config management for different environments
-- [ ] **Error Tracking** - Integrate Sentry or similar for error monitoring
-- [ ] **Performance Budgets** - Set and enforce bundle size limits
+- [ ] Pagination support for loading more than 30 repositories
+- [ ] Repository sorting (by stars, forks, name, last updated)
+- [ ] Dark/light mode toggle
+- [ ] Enhanced error handling with React error boundaries
+- [ ] Request caching to optimize API usage
+- [ ] Comprehensive test coverage (unit and E2E tests)
+- [ ] CI/CD pipeline for automated deployments
+- [ ] Performance optimizations (code splitting, lazy loading)
 
 ## 🤝 Contributing
 
