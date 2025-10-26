@@ -37,3 +37,6 @@ storybook-static
 .env.test
 .env.production
 .vercel
+
+# Test coverage
+coverage
