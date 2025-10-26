@@ -129,9 +129,23 @@ npm run storybook
 
 Storybook will be available at `http://localhost:6006`
 
-You can interact with all components, view their stories, and test them in isolation.
+You can interact with all components, view their stories, and test them in isolation. **All component tests are visible in the "Interactions" tab** of each story.
 
 ### Run Vitest Tests
+
+⚠️ **Known Issue**: The Storybook + Vitest browser mode integration can be flaky and may intermittently fail with module loading errors. This is a known limitation of the integration.
+
+**Recommended approach** (most reliable):
+
+```bash
+# Terminal 1: Start Storybook first
+npm run storybook
+
+# Terminal 2: Wait for Storybook to fully load at http://localhost:6006, then run tests
+npm test
+```
+
+**Alternative commands:**
 
 Run all tests:
 
@@ -150,6 +164,12 @@ Run tests with coverage:
 ```bash
 npx vitest --coverage
 ```
+
+**If tests fail intermittently:**
+
+- Ensure Storybook is fully loaded before running tests
+- Try running tests 2-3 times (retry logic is configured)
+- Tests can also be run interactively in the Storybook UI, which is more stable for debugging
 
 ### Build Storybook for Deployment
 
